@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+## tailwind Code Editor 설정
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Tailwind CSS IntelliSense 익스텐션
 
-## Available Scripts
+- 테일윈드 공식 익스텐션을 사용하면 자동 완성, 클래스명 호버 시 해당 클래스 명의 대한 클래스 속성 확인, 린팅 등의 기능을 제공하여 좀 더 편리하게 코드를 작성할 수 있다.
 
-In the project directory, you can run:
+# Prettier 플러그인
 
-### `npm start`
+- 테일윈드 공식 prettier 플러그인을 사용하면 권장 순서에 따라 클래스를 자동 정렬할 수 있다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```sh
+npm install -D prettier-plugin-tailwindcss
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```json
+// .prettierrc.json
+{
+  // 생략
+  "plugins": ["prettier-plugin-tailwindcss"]
+}
+```
 
-### `npm test`
+# Custom Styles
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- 커스텀 테마
 
-### `npm run build`
+- 테일윈드는 다양한 색상과 px을 지원하고 있다. 하지만 프로젝트를 진행하다 보면 해당 컨셉에 맞는 디자인 가이드가 정해져 여러 컴포넌트에서 필요한 경우가 있다. 이럴 때 tailwind.config.js의 theme에 추가하여 사용할 수 있다. theme.extend.colors가 아닌 theme.colors에 추가하게 되면 기존 색상을 덮어쓰게 된다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        primary: "#ffc107",
+        secondary: "#2979ff",
+        success: "00c07f",
+        failure: "ff6562",
+      },
+      fontSize: {
+        "15px": "15px",
+      },
+    },
+  },
+};
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```html
+<button type="button" className="rounded-md bg-primary text-15px">
+  로그인
+</button>
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# 임의의 값 사용
 
-### `npm run eject`
+- 한번 사용하는 색상이 있는데 해당 색상은 테일윈드 팔레트에서 지원하지 않는다. 또한 특정 px을 한 번씩 사용해야 하는데 해당 px을 지원하지 않아 theme에 추가하는 건 별로 좋지 않은 생각 같다. 이럴 땐 다음과 같이 사용할 수 있다.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```html
+<button type="button" className="rounded-[50px] bg-[#702ddc] text-[15px]">
+  로그인
+</button>
+```
